@@ -73,12 +73,21 @@ Vagrant.configure("2") do |config|
     web.vm.box = "ubuntu/trusty64"
     web.vm.network "public_network", bridge: "wlp3s0", ip: "192.168.0.101"
     web.vm.hostname = "web"
+    web.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+    web.vm.provision "shell", inline: <<-SHELL
+      echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmahmeSB1Rd15W7k/eqIGNMLV+RGW4Gz3QhH4hM/lPNljwaRwOlUCaYicWEOnNLhYYDVc59+qU4mr+ksE67EGUPYzCN3Z1EBRMeSb5hdCPdvT0ZIfbwmIAP8vHejZtTVwuOtTtL+jreHJc0AYW1uSzQNrfJUrXzKy7z159rnaHrPofbHeu3zrelMdpUEDoFS+fMXgfeMzM72145laxCBm6sQL9Kr1RUeNVwICRBHE1ygojWpwebcClTUDCrSYqeDP/cnXfH8DML1uL0EaYDaHl5+Ko/6qnt/iLzzJPnI/OqC9mH3RNkgOzfe4XMdBjsSLw+yJmNRLSikmHQkURiyKf eduardo@wolverine" >> /home/vagrant/.ssh/authorized_keys
+    SHELL
   end
 
   config.vm.define "db" do |db|
     db.vm.box = "ubuntu/trusty64"
     db.vm.network "public_network", bridge: "wlp3s0", ip: "192.168.0.102"
     db.vm.hostname = "db"
+    db.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+    db.vm.provision "shell", inline: <<-SHELL
+      echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmahmeSB1Rd15W7k/eqIGNMLV+RGW4Gz3QhH4hM/lPNljwaRwOlUCaYicWEOnNLhYYDVc59+qU4mr+ksE67EGUPYzCN3Z1EBRMeSb5hdCPdvT0ZIfbwmIAP8vHejZtTVwuOtTtL+jreHJc0AYW1uSzQNrfJUrXzKy7z159rnaHrPofbHeu3zrelMdpUEDoFS+fMXgfeMzM72145laxCBm6sQL9Kr1RUeNVwICRBHE1ygojWpwebcClTUDCrSYqeDP/cnXfH8DML1uL0EaYDaHl5+Ko/6qnt/iLzzJPnI/OqC9mH3RNkgOzfe4XMdBjsSLw+yJmNRLSikmHQkURiyKf eduardo@wolverine" >> /home/vagrant/.ssh/authorized_keys
+    SHELL
+
   end
 
 end
