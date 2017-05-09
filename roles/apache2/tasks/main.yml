@@ -1,0 +1,9 @@
+---
+# tasks file for apache2
+- name: Instala o apache2
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+    - apache2
+
+- name: Garante que o serviço está habilitado
+  service: name=apache2 state=started enabled=yes
