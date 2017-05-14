@@ -1,0 +1,10 @@
+---
+# tasks file for mysql
+- name: Instala o mysql
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+    - mysql-server
+    - mysql-common
+
+- name: Garante que o serviço está habilitado
+  service: name=mysql state=started enabled=yes

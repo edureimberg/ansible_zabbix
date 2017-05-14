@@ -1,0 +1,5 @@
+---
+- hosts: banco
+  become: true
+  roles:
+    - mysql

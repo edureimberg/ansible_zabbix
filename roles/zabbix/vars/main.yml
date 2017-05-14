@@ -1,0 +1,4 @@
+---
+# vars file for zabbix
+versao: "{{ ansible_distribution_version }}"
+release: "{{ ansible_distribution_release }}"

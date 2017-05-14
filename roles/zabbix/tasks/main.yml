@@ -1,0 +1,18 @@
+---
+# tasks file for zabbix
+- name: Baixa o repositorio do zabbix
+  get_url:
+    url: http://repo.zabbix.com/zabbix/3.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_3.2-1+{{ release }}_all.deb
+    dest: /tmp/zabbix-release_3.2-1+{{ release }}_all.deb
+
+- name: Verifica se o repo zabbix existe
+  shell: "dpkg -l | grep zabbix-release"
+  register: checa_repo
+  ignore_errors: true
+
+- name: Instala o repositorio do zabbix
+  command: dpkg -i /tmp/zabbix-release_3.2-1+{{ release }}_all.deb
+  when: checa_repo.rc != 0
+
+- name: Instala o zabbix-frontend
+  apt: name=zabbix-frontend-php state=present update_cache=yes
