@@ -1,0 +1,3 @@
+---
+# vars file for zabbix-db
+senha_zabbix: zabbix@123

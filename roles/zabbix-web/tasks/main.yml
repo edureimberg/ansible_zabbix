@@ -1,0 +1,14 @@
+---
+# tasks file for zabbix-web
+- name: Instala o zabbix-frontend
+  apt: name=zabbix-frontend-php state=present update_cache=yes
+
+- name: copia o arquivo zabbix_server.conf
+  template: src=zabbix_server.conf.j2 dest=/etc/zabbix/zabbix_server.conf
+  notify: Restart Apache
+
+- name: Copia o arquivo apache.conf
+  copy:
+    src: apache.conf
+    dest: /etc/zabbix/apache.conf
+  notify: Restart Apache

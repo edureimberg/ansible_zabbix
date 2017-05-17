@@ -1,0 +1,31 @@
+---
+# tasks file for zabbix-db
+- name: Instala o zabbix-server-mysql
+  apt: name=zabbix-server-mysql state=present update_cache=yes
+
+- name: Cria o banco zabbix
+  mysql_db:
+    name: zabbix
+    encoding: utf8
+    login_user: root
+    login_password: "{{ senha }}"
+    state: import
+    target: /usr/share/doc/zabbix-server-mysql/create.sql.gz
+  ignore_errors: true
+
+- name: Cria o usuario zabbix
+  mysql_user:
+    name: zabbix
+    password: "{{ senha_zabbix }}"
+    login_user: root
+    login_password: "{{ senha }}"
+    host: '%'
+    priv: 'zabbix.*:ALL'
+    state: present
+
+- name: copia o arquivo zabbix_server.conf
+  template: src=zabbix_server.conf.j2 dest=/etc/zabbix/zabbix_server.conf
+  notify: Restart zabbix-server
+
+- name: Garante que o serviço está habilitado
+  service: name=zabbix-server state=started enabled=yes

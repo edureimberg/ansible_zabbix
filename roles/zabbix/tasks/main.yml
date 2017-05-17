@@ -14,5 +14,3 @@
   command: dpkg -i /tmp/zabbix-release_3.2-1+{{ release }}_all.deb
   when: checa_repo.rc != 0
 
-- name: Instala o zabbix-frontend
-  apt: name=zabbix-frontend-php state=present update_cache=yes

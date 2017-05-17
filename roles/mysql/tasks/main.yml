@@ -10,7 +10,6 @@
 - name: Garante que o serviço está habilitado
   service: name=mysql state=started enabled=yes
 
-
 - name: Testa a conexão com o banco e se for necessário, cria a senha do root
   shell: "mysql -u root"
   register: conexao
@@ -23,15 +22,15 @@
     state: present
   when: conexao|success
 
-- name: Verifica se eh necessario a alteracao do bind-address
-  shell: grep "bind-address = 0.0.0.0" /etc/mysql/my.cnf
-  register: bind_address
-  ignore_errors: true
+# - name: Verifica se eh necessario a alteracao do bind-address
+#   shell: grep "bind-address = 0.0.0.0" /etc/mysql/my.cnf
+#   register: bind_address
+#   ignore_errors: true
 
 - name: Altera o parametro "bind-address"
   lineinfile:
     path: /etc/mysql/my.cnf
     regexp: ^bind-address
     line: bind-address = 0.0.0.0
-  when: bind_address|failed
+  # when: bind_address|failed
   notify: Restart mysql
